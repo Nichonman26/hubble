@@ -11,6 +11,16 @@ import StatsWidget from "@/components/widgets/StatsWidget.vue"
 <template>
 	<Flex gap="20" :class="$style.wrapper">
 		<Flex direction="column" gap="20" :class="$style.left_column">
+			<Flex :class="$style.warning">
+				<Text size="13" weight="600" height="140" color="secondary">
+					Hubble is designed to be used from a computer.
+					<Text weight="500" color="tertiary"
+						>We tried to make the mobile version as working as possible, but there may be visual bugs depending on your
+						device.</Text
+					>
+				</Text>
+			</Flex>
+
 			<GlobeWidget />
 
 			<Flex gap="20" :class="$style.bottom">
@@ -48,6 +58,14 @@ import StatsWidget from "@/components/widgets/StatsWidget.vue"
 	height: 100%;
 }
 
+.warning {
+	display: none;
+
+	background: var(--card-background);
+
+	padding: 20px;
+}
+
 @media (max-width: 2000px) {
 	.bottom {
 		& > div {
@@ -79,6 +97,10 @@ import StatsWidget from "@/components/widgets/StatsWidget.vue"
 		& .bottom {
 			min-height: initial;
 		}
+	}
+
+	.warning {
+		display: initial;
 	}
 }
 

@@ -4,7 +4,7 @@ import { ref, watch, onMounted } from "vue"
 import { DateTime } from "luxon"
 
 /** Config */
-import { useServerURL, useSocketURL } from "@/services/config"
+import { useSocketURL } from "@/services/config"
 
 /** Local Components */
 import Globe from "../local/Globe.vue"
@@ -16,7 +16,6 @@ import { fetchThxByHeight } from "@/services/api/tx"
 
 /** UI */
 import { Dropdown, DropdownItem } from "@/components/ui/Dropdown"
-import Tooltip from "@/components/ui/Tooltip.vue"
 
 /** Store */
 import { useAppStore } from "@/stores/app"
@@ -306,5 +305,10 @@ watch(
 		background: var(--op-5);
 	}
 }
+
+@media (max-width: 1500px) {
+	.wrapper {
+		min-height: 800px;
+	}
+}
 </style>
-../local/TPM.vue
