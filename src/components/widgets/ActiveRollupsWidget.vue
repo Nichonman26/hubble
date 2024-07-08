@@ -54,6 +54,10 @@ watch(
 )
 
 const onResize = () => {
+	if (rollupsEl.value.wrapper.getBoundingClientRect().width !== 360) {
+		availableSize.value = 15
+		return
+	}
 	availableSize.value = Math.floor((rollupsEl.value.wrapper.getBoundingClientRect().height - 32) / 72)
 }
 </script>
@@ -161,6 +165,12 @@ const onResize = () => {
 		& span {
 			color: var(--txt-primary);
 		}
+	}
+}
+
+@media (max-width: 1500px) {
+	.wrapper {
+		height: initial;
 	}
 }
 </style>

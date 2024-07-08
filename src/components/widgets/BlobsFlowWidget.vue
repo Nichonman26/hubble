@@ -72,6 +72,7 @@ watch(
 .wrapper {
 	position: relative;
 	width: 100%;
+	min-height: 220px;
 
 	background: var(--card-background);
 	overflow: hidden;
@@ -84,6 +85,7 @@ watch(
 	left: 20px;
 	bottom: 20px;
 
+	min-height: 120px;
 	height: 120px;
 }
 

@@ -47,4 +47,44 @@ import StatsWidget from "@/components/widgets/StatsWidget.vue"
 	min-width: 400px;
 	height: 100%;
 }
+
+@media (max-width: 2000px) {
+	.bottom {
+		& > div {
+			flex: 1;
+			min-width: initial;
+			width: initial;
+		}
+	}
+}
+
+@media (max-width: 1500px) {
+	.wrapper {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 1000px) {
+	.bottom {
+		flex-direction: column;
+	}
+
+	.bottom {
+		& > div {
+			gap: 16px;
+		}
+	}
+
+	.left_column {
+		& .bottom {
+			min-height: initial;
+		}
+	}
+}
+
+@media (max-width: 700px) {
+	.wrapper {
+		padding: 12px;
+	}
+}
 </style>
