@@ -49,8 +49,6 @@ const MAX_RADIUS = 5
 const PROPAGATION_SPEED = 2
 const NUM_RINGS = 2
 
-const getIcon = () => {}
-
 onMounted(() => {
 	window.addEventListener("resize", onResize)
 
@@ -72,7 +70,6 @@ onMounted(() => {
 	scene.add(group)
 
 	globe = new ThreeGlobe({ waitForGlobeReady: true }).globeImageUrl("/8k_mercury.jpg")
-
 	globe.showAtmosphere(false)
 	globe
 		.arcColor(() => "rgba(255,100,50, 1)")
