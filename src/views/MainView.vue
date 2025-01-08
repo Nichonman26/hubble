@@ -54,8 +54,10 @@ import StatsWidget from "@/components/widgets/StatsWidget.vue"
 }
 
 .right_column {
+	display: grid;
+	grid-template-rows: 1fr 220px;
+
 	min-width: 400px;
-	height: 100%;
 }
 
 .warning {

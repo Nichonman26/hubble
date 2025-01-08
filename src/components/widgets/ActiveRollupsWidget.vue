@@ -17,10 +17,6 @@ const rollups = ref([])
 const total = ref(0)
 const totalSize = ref(0)
 
-const availableSize = ref(0)
-
-const rollupsEl = ref()
-
 const getData = async () => {
 	const rawRollups = await fetchRollups({ limit: 20, sort_by: "size" })
 	rollups.value = rawRollups || []
@@ -32,18 +28,10 @@ const getData = async () => {
 }
 
 onMounted(async () => {
-	availableSize.value = Math.floor((rollupsEl.value.wrapper.getBoundingClientRect().height - 32) / 68)
-
 	getData()
 	setInterval(() => {
 		getData()
 	}, 60_000 * 5)
-
-	window.addEventListener("resize", onResize)
-})
-
-onBeforeUnmount(() => {
-	window.removeEventListener("resize", onResize)
 })
 
 watch(
@@ -52,14 +40,6 @@ watch(
 		getData()
 	},
 )
-
-const onResize = () => {
-	if (rollupsEl.value.wrapper.getBoundingClientRect().width !== 360) {
-		availableSize.value = 15
-		return
-	}
-	availableSize.value = Math.floor((rollupsEl.value.wrapper.getBoundingClientRect().height - 32) / 72)
-}
 </script>
 
 <template>
@@ -78,20 +58,25 @@ const onResize = () => {
 			</Flex>
 		</Flex>
 
-		<Flex ref="rollupsEl" direction="column" gap="8" :class="$style.rollups">
-			<a
-				v-for="(rollup, idx) in rollups.slice(0, availableSize)"
-				:href="`${getCeleniumURL(appStore.network)}/rollup/${rollup.slug}`"
-				target="_blank"
-			>
+		<Flex align="center" justify="between" style="padding: 0 16px; margin-bottom: -12px">
+			<Text size="12" weight="600" color="tertiary">Rollup</Text>
+			<Text size="12" weight="600" color="tertiary">Total Size</Text>
+		</Flex>
+
+		<Flex direction="column" gap="6" :class="$style.rollups">
+			<a v-for="(rollup, idx) in rollups" :href="`${getCeleniumURL(appStore.network)}/rollup/${rollup.slug}`" target="_blank">
 				<Flex align="center" justify="between" :class="$style.rollup">
 					<Flex align="center" gap="12">
-						<Text size="16" weight="500" color="tertiary" :class="$style.counter">{{ idx + 1 }}</Text>
+						<div :class="$style.counter">
+							<Icon v-if="idx === 0" name="crown" size="14" color="orange" />
+							<Text v-else size="14" weight="600" color="tertiary">{{ idx + 1 }}</Text>
+						</div>
 
 						<img :src="rollup.logo" />
 
 						<Flex direction="column" gap="6">
 							<Text size="14" weight="600" color="primary"> {{ rollup.name }} </Text>
+
 							<Text size="13" weight="500" color="tertiary">
 								{{ DateTime.fromISO(rollup.last_message_time).setLocale("en").toRelative() }}
 							</Text>
@@ -101,22 +86,21 @@ const onResize = () => {
 					<Text size="14" weight="600" color="primary">{{ formatBytes(rollup.size) }}</Text>
 				</Flex>
 			</a>
-
-			<a v-if="rollups.length > 0" href="https://celenium.io/rollups" target="_blank">
-				<Flex justify="center" align="center" gap="6" :class="$style.btn">
-					<Text size="13" weight="600" color="secondary">View all on Celenium Explorer</Text>
-					<Icon name="arrow-top-right" size="14" color="secondary" />
-				</Flex>
-			</a>
 		</Flex>
 
-		<Text size="12" weight="500" color="support">Refetch every 5 minutes</Text>
+		<a v-if="rollups.length > 0" href="https://celenium.io/rollups" target="_blank">
+			<Flex justify="center" align="center" gap="6" :class="$style.btn">
+				<Text size="13" weight="600" color="secondary">View all on Celenium Explorer</Text>
+				<Icon name="arrow-top-right" size="14" color="secondary" />
+			</Flex>
+		</a>
 	</Flex>
 </template>
 
 <style module>
 .wrapper {
-	height: 100%;
+	min-height: 100%;
+	height: 0;
 
 	background: var(--card-background);
 
@@ -124,20 +108,20 @@ const onResize = () => {
 }
 
 .rollups {
-	flex: 1;
+	overflow: auto;
 }
 
 .rollup {
 	min-height: 60px;
 
-	box-shadow: 0 0 0 2px var(--op-5);
 	border-radius: 8px;
+	background: var(--op-5);
 
 	padding: 0 16px;
 
 	& img {
-		width: 40px;
-		height: 40px;
+		width: 32px;
+		height: 32px;
 
 		border-radius: 50%;
 		background: var(--card-background);

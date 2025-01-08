@@ -176,10 +176,6 @@ watch(
 
 			<TPM />
 		</Flex>
-
-		<Flex direction="column" justify="between">
-			<img src="@/assets/qr.png" />
-		</Flex>
 	</Flex>
 </template>
 
